@@ -15,7 +15,7 @@ nwbfile = pynwb.NWBFile('Example time series data',
                   experimenter='Padraig Gleeson',
                   experiment_description='Add example data',
                   institution='UCL',
-                  keywords=['Test','Data'])
+                  )
                   
 timestamps = [i/1000.0 for i in range(2000)]
 data = [math.sin(t/0.05) for t in timestamps]
