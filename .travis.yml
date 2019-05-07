@@ -17,6 +17,7 @@ install:
     
     - pip install -U pynwb
     - pip install runipy
+    - pip install pyabf
     
 script:
     - cd NWB
@@ -27,3 +28,12 @@ script:
     - cd ../FergusonEtAl2015/
     - runipy TestData.ipynb 
     - ls -alt
+    
+    - cd ../TriplettEtAl2018
+    - runipy TestDataset.ipynb 
+    - ls -alt
+    
+    - cd ../ScholzEtAl2019
+    - runipy Testing.ipynb 
+    - ls -alt
+    
