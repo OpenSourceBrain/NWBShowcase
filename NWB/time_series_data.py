@@ -28,4 +28,4 @@ nwb_file_name = 'time_series_data.nwb'
 io = pynwb.NWBHDF5IO(nwb_file_name, mode='w')
 io.write(nwbfile)
 io.close()
-print("Written NWB file to %s"%nwb_file_name)
+print("Written NWB file to %s using pynwb v%s"%(nwb_file_name,pynwb.__version__))

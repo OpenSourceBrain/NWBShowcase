@@ -16,8 +16,14 @@ python:
 install:
     
     - pip install -U pynwb
+    - pip install runipy
     
 script:
     - cd NWB
+    - python simple.py
     - python time_series_data.py
+    - ls -alt
+    
+    - cd ../FergusonEtAl2015/
+    - runipy TestData.ipynb 
     - ls -alt

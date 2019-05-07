@@ -12,6 +12,9 @@ nwbfile = pynwb.NWBFile('PyNWB tutorial',
                   file_create_date=create_date,
                   notes='Example NWB file created with pynwb v%s'%pynwb.__version__)
 
-io = pynwb.NWBHDF5IO('simple_example.nwb', mode='w')
+nwb_file_name='simple_example.nwb'
+io = pynwb.NWBHDF5IO(nwb_file_name, mode='w')
+
+print("Written NWB file to %s using pynwb v%s"%(nwb_file_name,pynwb.__version__))
 io.write(nwbfile)
 io.close()
