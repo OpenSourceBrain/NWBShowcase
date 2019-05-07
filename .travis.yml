@@ -34,6 +34,8 @@ script:
     - ls -alt
     
     - cd ../ScholzEtAl2019
+    - wget https://osf.io/5298q/download -O AML18_moving.hdf5  
+    - wget https://osf.io/sgnrh/download -O AML175_moving.hdf5  
     - runipy Testing.ipynb 
     - ls -alt
     
