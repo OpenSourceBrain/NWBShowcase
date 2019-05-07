@@ -1,0 +1,23 @@
+
+dist: trusty
+sudo: false 
+
+language: python
+
+addons:
+  apt:
+    packages:
+    - python-numpy
+
+python: 
+  - "2.7"
+  - "3.6"
+  
+install:
+    
+    - pip install -U pynwb
+    
+script:
+    - cd NWB
+    - python time_series_data.py
+    - ls -alt
