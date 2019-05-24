@@ -13,15 +13,18 @@ nwbfile = pynwb.NWBFile('Example time series data',
                   file_create_date=create_date,
                   notes='Example NWB file created with pynwb v%s'%pynwb.__version__,
                   experimenter='Padraig Gleeson',
-                  experiment_description='Add example data',
+                  experiment_description='Add some example data, just some sine waves...',
                   institution='UCL',
                   )
                   
 timestamps = [i/1000.0 for i in range(2000)]
 data = [math.sin(t/0.05) for t in timestamps]
 
-test_ts = pynwb.TimeSeries('test_sine_timeseries', data, 'SIunit', timestamps=timestamps)
+test_ts = pynwb.TimeSeries('test_sine_1', data, 'mV', timestamps=timestamps, comments="Bigger", description="Dummy data")
+nwbfile.add_acquisition(test_ts)
 
+data = [0.5*math.sin((t+20)/0.04) for t in timestamps]
+test_ts = pynwb.TimeSeries('test_sine_2', data, 'mV', timestamps=timestamps, comments="Smaller", description="Dummy data")
 nwbfile.add_acquisition(test_ts)
 
 nwb_file_name = 'time_series_data.nwb'
