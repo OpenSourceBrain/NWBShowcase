@@ -1,34 +1,99 @@
 from datetime import datetime
 
-from dateutil.tz import tzlocal
+import numpy as np
 import pynwb
-import math
+from dateutil.tz import tzlocal
 
-start_time = datetime(2019, 1, 1, 11, tzinfo=tzlocal())
-create_date = datetime.now(tz=tzlocal())
+from pynwb import NWBHDF5IO
 
-nwbfile = pynwb.NWBFile('Example time series data', 
-                  'TSD', 
-                  start_time,
-                  file_create_date=create_date,
-                  notes='Example NWB file created with pynwb v%s'%pynwb.__version__,
-                  experimenter='Padraig Gleeson',
-                  experiment_description='Add some example data, just some sine waves...',
-                  institution='UCL',
-                  )
-                  
-timestamps = [i/1000.0 for i in range(2000)]
-data = [math.sin(t/0.05) for t in timestamps]
+def create_nwb_file():
+    '''
+    acquisition.test_sine_1
+    acquisition.test_sine_2
+    :return:
+    '''
+    start_time = datetime(2019, 1, 1, 11, tzinfo=tzlocal())
+    create_date = datetime.now(tz=tzlocal())
+    
+    # FIXME: this attr breaks nwb-explorer
+    # date_of_birth=create_date 
+    sub = pynwb.file.Subject(
+        age='33.',
+        description='Synthetic data',
+        genotype='AA.',
+        sex='F.',
+        species='Homo Sapiens.',
+        subject_id='HM-AA-875362791629.',
+        weight='233lb.'
+    )
 
-test_ts = pynwb.TimeSeries('test_sine_1', data, 'mV', timestamps=timestamps, comments="Bigger", description="Dummy data")
-nwbfile.add_acquisition(test_ts)
+    nwbfile = pynwb.NWBFile('Example structured data',
+                            'TSD',
+                            start_time,
+                            file_create_date=create_date,
+                            session_description='Home.',
+                            identifier='SF-238.',
+                            notes='This experiment was never performed.',
+                            experimenter='Dorothy M. Thomas.',
+                            experiment_description='We use a python script to synthetize this data.',
+                            institution='Institute AACDDSAQ',
+                            session_id='NR-22232.',
+                            keywords=['behavioural', 'EEG'],
+                            pharmacology='No anesthesia or painkillers were used during this session.',
+                            protocol='IACUC protocol.',
+                            related_publications='Pending DOI confirmation.',
+                            slices='No slices created.',
+                            source_script='create_nwb_file',
+                            source_script_file_name='generate_timeseries_data.py',
+                            data_collection='Numpy was use for data generation.',
+                            surgery='No surgery was performed.',
+                            virus='No virus was used.',
+                            stimulus_notes='No sttimulus.',
+                            lab='AADS-UUSKD Lab.',
+                            subject=sub)
 
-data = [0.5*math.sin((t+20)/0.04) for t in timestamps]
-test_ts = pynwb.TimeSeries('test_sine_2', data, 'mV', timestamps=timestamps, comments="Smaller", description="Dummy data")
-nwbfile.add_acquisition(test_ts)
+    # Device
+    device = nwbfile.create_device(name='Tetrode')
 
-nwb_file_name = 'time_series_data.nwb'
-io = pynwb.NWBHDF5IO(nwb_file_name, mode='w')
-io.write(nwbfile)
-io.close()
-print("Written NWB file to %s using pynwb v%s"%(nwb_file_name,pynwb.__version__))
+    # Electrode Group
+    electrode_group = nwbfile.create_electrode_group(name='Tetrode',
+                                                 description='Tetrode group',
+                                                 location='CA1',
+                                                 device=device)
+    # Add Electrodes
+    for idx in range(1, 5):
+        nwbfile.add_electrode(idx,
+                          x=1.0, y=2.0, z=3.0,
+                          imp=float(-idx),
+                          location='CA1', 
+                          filtering='Description of hardware filtering.',
+                          group=electrode_group)
+    # Electrode table
+    electrode_table_region = nwbfile.create_electrode_table_region([0, 2], 'The first and third electrodes.')
+
+    N = 100
+    timestamps = np.arange(N) 
+
+    ts1 = pynwb.TimeSeries(name='test_sine_1', 
+                        data=np.sin(timestamps/4),
+                        timestamps=timestamps,
+                        unit='mV',
+                        comments='Human-readable comments about this TimeSeries dataset.',
+                        description='Description of this TimeSeries dataset.')
+
+    ts2 = pynwb.TimeSeries(name='test_sine_2', 
+                        data=np.cos(timestamps/4),
+                        unit='pA',
+                        rate=1.0,
+                        comments='Another human-readable comments about this TimeSeries dataset.',
+                        description='Another description of this TimeSeries dataset.',
+                        )
+    
+    nwbfile.add_acquisition(ts1)
+    nwbfile.add_acquisition(ts2)
+
+
+    return nwbfile
+
+with NWBHDF5IO('time_series_data.nwb', 'w') as io:
+    io.write(create_nwb_file())
