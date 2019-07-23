@@ -108,7 +108,9 @@ def create_image(name, nwbfile):
 
     images = np.array([imageio.imread(url) for url in images_url])
     
-    timestamp = datetime.now().timestamp()
+    ## Fake timestamping to overcome py2 travis
+    # timestamp = datetime.now().timestamp()
+    timestamp = 1563907835.857213
     timestamps = np.arange(n) + timestamp
 
     return ImageSeries(name='test_image_series',
