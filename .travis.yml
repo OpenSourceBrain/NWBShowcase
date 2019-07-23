@@ -18,7 +18,7 @@ install:
     - pip install -U pynwb
     - pip install runipy
     - pip install pyabf
-    
+    - pip install imageio
 script:
     - cd NWB
     - python simple.py

@@ -5,6 +5,8 @@ import pynwb
 from dateutil.tz import tzlocal
 
 from pynwb import NWBHDF5IO
+from pynwb.device import Device
+from pynwb.image import ImageSeries
 
 def create_nwb_file():
     '''
@@ -92,8 +94,30 @@ def create_nwb_file():
     nwbfile.add_acquisition(ts1)
     nwbfile.add_acquisition(ts2)
 
+    nwbfile.add_acquisition(create_image('test_image_1', nwbfile))
 
     return nwbfile
+
+
+def create_image(name, nwbfile):
+    import imageio
+    n = 82
+    base_url = "https://raw.githubusercontent.com/OpenSourceBrain/NWBShowcase/master/NWB/images/"
+    
+    images_url = [base_url + 'MyNetwork_T' + str(i) + '.png' for i in range(n)]  
+
+    images = np.array([imageio.imread(url) for url in images_url])
+    
+    timestamp = datetime.now().timestamp()
+    timestamps = np.arange(n) + timestamp
+
+    return ImageSeries(name='test_image_series',
+                               external_file=images_url,
+                               timestamps=timestamps,
+                               starting_frame=[0], 
+                               format='external', 
+                               description='Series of images from a simulation of the cerebellum via neuroConstruct')
+
 
 with NWBHDF5IO('time_series_data.nwb', 'w') as io:
     io.write(create_nwb_file())
