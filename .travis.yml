@@ -15,7 +15,7 @@ python:
   
 install:
     
-    - pip install -U pynwb
+    - pip install pynwb==1.0.3
     - pip install runipy
     - pip install pyabf
     - pip install imageio
