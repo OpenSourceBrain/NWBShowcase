@@ -86,7 +86,7 @@ def create_nwb_file():
     ts2 = pynwb.TimeSeries(name='test_sine_2', 
                         data=np.cos(timestamps/4),
                         unit='pA',
-                        rate=1.0,
+                        timestamps=timestamps,
                         comments='Another human-readable comments about this TimeSeries dataset.',
                         description='Another description of this TimeSeries dataset.',
                         )
@@ -116,7 +116,7 @@ def create_image(name, nwbfile):
     return ImageSeries(name='test_image_series',
                                external_file=images_url,
                                timestamps=timestamps,
-                               starting_frame=[0], 
+                               starting_frame=np.zeros(n), 
                                format='external', 
                                description='Series of images from a simulation of the cerebellum via neuroConstruct')
 
