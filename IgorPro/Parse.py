@@ -19,14 +19,11 @@ def data_info(wdata):
 voltages = {}
 currents = {}
 
-fig1 = plt.figure(figsize=(12, 6), dpi=80)
-curr = fig1.add_subplot(111)
-fig2 = plt.figure(figsize=(12, 6), dpi=80)
-volt = fig2.add_subplot(111)
 
 found = 0
 added = {}
-
+added_stim = {}
+'''
 for i,r in enumerate(records):
 
     #print('=========[%s]====='%i)
@@ -36,36 +33,82 @@ for i,r in enumerate(records):
         found+=1
         print('=========[%s (%s) of %i found]====='%(i,name,found))
         
-        #print('Record %s: %s'%(i,r))
-        notes = r.wave['wave']['note'].replace('\r','\n')
-        properties = {}
-        for p in notes.split('\n'):
-            properties[p.split(':')[0]] = p.split(':')[-1]
-        print(r.header)
-        print(dir(r))
-        print properties
-        folder = properties['Folder'] if 'Folder' in properties else 'F???'
-        if not folder in added:
-            added[folder] = []
-        added[folder].append(name)
-        if not folder in voltages:
-            fig1 = plt.figure(figsize=(12, 6), dpi=80)
-            curr = fig1.add_subplot(111)
-            currents[folder] = curr
-            fig2 = plt.figure(figsize=(12, 6), dpi=80)
-            volt = fig2.add_subplot(111)
-            voltages[folder] = volt
-
-        print '-----------  %s ------'%r.wave['wave']['wave_header']['bname']
-        print r.wave['wave']
-        #print '..........'
-        print notes
-        data_info(r.wave['wave']['wData'])
-        print
         
-        voltages[folder].plot(r.wave['wave']['wData'])
-        
-print('All added: %s'%added)
-#plt.show()
-
+'''
 pprint(filesystem)
+
+for d in filesystem['root']:
+    print('===  IgorPro folder: %s'%d)
+    if 'nm10Dec' in d:
+        for dd in filesystem['root'][d]:
+            print('Folder %s/%s'%(d,dd))
+            if 'RecordA' in dd:
+                #print(' >>  %s: %s'%(dd, filesystem['root'][d][dd]))
+                found+=1
+                record = filesystem['root'][d][dd]
+                wave = record.wave['wave']
+                name = wave['wave_header']['bname']
+                print('=========[%s, of %i found]====='%(name,found))
+
+                #print('Record %s: %s'%(i,r))
+                notes = wave['note'].replace('\r','\n')
+                properties = {}
+                for p in notes.split('\n'):
+                    properties[p.split(':')[0]] = p.split(':')[-1]
+               
+                print properties
+                folder = d
+                if not folder in added:
+                    added[folder] = []
+                added[folder].append(name)
+                if not folder in voltages:
+                    fig1 = plt.figure(figsize=(12, 6), dpi=80)
+                    curr = fig1.add_subplot(111)
+                    currents[folder] = curr
+                    fig2 = plt.figure(figsize=(12, 6), dpi=80)
+                    volt = fig2.add_subplot(111)
+                    voltages[folder] = volt
+                '''
+                print '-----------  %s ------'%name
+                print wave
+                #print '..........'
+                print notes
+                '''
+                data_info(wave['wData'])
+                print
+
+                voltages[folder].plot(wave['wData'])
+                
+            if 'Step_CC' in dd:
+                for ddd in filesystem['root'][d][dd]:
+                    print(' - Folder %s/%s/%s'%(d,dd,ddd))
+                    if 'uDAC_0' in ddd:
+                        
+                        print(' >>  %s/%s/%s: %s'%(d,dd,ddd, filesystem['root'][d][dd][ddd]))
+                        
+                        record = filesystem['root'][d][dd][ddd]
+                        wave = record.wave['wave']
+                        name = wave['wave_header']['bname']
+
+                        #print('Record %s: %s'%(i,r))
+                        notes = wave['note'].replace('\r','\n')
+                        
+                        folder = d
+                        if not folder in added_stim:
+                            added_stim[folder] = []
+                        added_stim[folder].append(name)
+                        if not folder in currents:
+                            fig1 = plt.figure(figsize=(12, 6), dpi=80)
+                            curr = fig1.add_subplot(111)
+                            currents[folder] = curr
+
+                        data_info(wave['wData'])
+                        print
+
+                        currents[folder].plot(wave['wData'])
+                
+for aa in [added, added_stim]:
+    for a in aa:
+        print('All added to %s (%i): %s'%(a,len(aa[a]),aa[a]))
+    
+plt.show()
