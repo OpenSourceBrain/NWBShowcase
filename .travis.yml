@@ -17,12 +17,13 @@ install:
     
     - pip install pynwb==1.0.3
     - pip install runipy
-    - pip install pyabf
+    - pip install pyabf==2.1.10
     - pip install imageio
 script:
     - cd NWB
     - python simple.py
     - python time_series_data.py
+    - python nwb_info.py time_series_data.nwb
     - ls -alt
     
     - cd ../FergusonEtAl2015/

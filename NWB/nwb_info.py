@@ -1,5 +1,6 @@
 import pynwb
 
+import platform
 
 def parse_arguments():
     """Parse command line arguments"""
@@ -39,14 +40,21 @@ def parse_arguments():
 def print_info(args):
     
     print('NWB info')
+            
+    print('  Info on Python (v%s) packages:'%platform.python_version())
+
     for m in ['pynwb', 'hdmf','numpy','pandas','scipy']:
         installed_ver = False
         try:
             exec('import %s'%m)
-            installed_ver = 'v%s'%eval('%s.__version__'%m)
-        except:
-            pass
-        print('  %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
+            if m == 'hdmf':
+                import hdmf._version
+                installed_ver = 'v%s'%hdmf._version.get_versions()['version']
+            else:
+                installed_ver = 'v%s'%eval('%s.__version__'%m)
+        except Exception as e:
+            installed_ver = '???'
+        print('    %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
                 
 
     
