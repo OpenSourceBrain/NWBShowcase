@@ -43,7 +43,7 @@ def print_info(args):
             
     print('  Info on Python (v%s) packages:'%platform.python_version())
 
-    for m in ['pynwb', 'hdmf','numpy','pandas','scipy']:
+    for m in ['pynwb', 'hdmf','numpy','pandas','scipy','six','h5py']:
         installed_ver = False
         try:
             exec('import %s'%m)

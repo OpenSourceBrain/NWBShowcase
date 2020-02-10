@@ -29,13 +29,17 @@ def create_nwb_file():
         weight='233lb.'
     )
 
+    import hdmf._version
+    hdmf_ver = 'v%s'%hdmf._version.get_versions()['version']
+    info = 'Example NWB file created with pynwb v%s (hdmf %s)'%(pynwb.__version__,hdmf_ver)
+
     nwbfile = pynwb.NWBFile('Example structured data',
                             'TSD',
                             start_time,
                             file_create_date=create_date,
                             session_description='Home.',
                             identifier='SF-238.',
-                            notes='This experiment was never performed.',
+                            notes=info,
                             experimenter='Dorothy M. Thomas.',
                             experiment_description='We use a python script to synthetize this data.',
                             institution='Institute AACDDSAQ',
@@ -50,7 +54,7 @@ def create_nwb_file():
                             data_collection='Numpy was use for data generation.',
                             surgery='No surgery was performed.',
                             virus='No virus was used.',
-                            stimulus_notes='No sttimulus.',
+                            stimulus_notes='No stimulus',
                             lab='AADS-UUSKD Lab.',
                             subject=sub)
 
