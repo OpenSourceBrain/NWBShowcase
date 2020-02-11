@@ -13,3 +13,8 @@
 .vscode
 .pytest_cache
 /IgorPro/__pycache__
+/NWB/__pycache__
+/TestData
+/NWB/nwb_info.pyc
+/NWB/time_series_data.OLD.nwb
+/FergusonEtAl2015/FergusonEtAl2015.OLD.nwb

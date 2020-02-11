@@ -1,6 +1,8 @@
 import pynwb
 
 import platform
+import os
+import time
 
 def parse_arguments():
     """Parse command line arguments"""
@@ -43,7 +45,7 @@ def print_info(args):
             
     print('  Info on Python (v%s) packages:'%platform.python_version())
 
-    for m in ['pynwb', 'hdmf','numpy','pandas','scipy','six','h5py']:
+    for m in ['pynwb', 'hdmf','numpy','pandas','scipy','six','h5py','pyabf']:
         installed_ver = False
         try:
             exec('import %s'%m)
@@ -55,7 +57,28 @@ def print_info(args):
         except Exception as e:
             installed_ver = '???'
         print('    %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
-                
+      
+ 
+    mod = time.ctime(os.path.getmtime(args.nwb_file))
+ 
+    print('  Info on %s (%s bytes; modified: %s)'%(args.nwb_file, os.path.getsize(args.nwb_file), mod))
+    
+    from pynwb import NWBHDF5IO
+    io = NWBHDF5IO(args.nwb_file, 'r')
+    nwbfile_in = io.read()
+    
+    a = nwbfile_in
+    #print(dir(a))
+    #for s in dir(a):
+    #    print('-- %s '%(s))
+        
+    key_fields = ['name','notes','subject']
+    for k in key_fields:
+        print('    %s = %s'%(k, getattr(nwbfile_in,k)))
+        
+    #print(nwbfile_in.fields.keys())
+    #print(nwbfile_in.general)
+    print('Finished looking at file %s'%args.nwb_file)
 
     
 def main(args=None):

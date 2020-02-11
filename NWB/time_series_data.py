@@ -7,6 +7,7 @@ from dateutil.tz import tzlocal
 from pynwb import NWBHDF5IO
 from pynwb.device import Device
 from pynwb.image import ImageSeries
+import platform
 
 def create_nwb_file():
     '''
@@ -31,7 +32,7 @@ def create_nwb_file():
 
     import hdmf._version
     hdmf_ver = 'v%s'%hdmf._version.get_versions()['version']
-    info = 'Example NWB file created with pynwb v%s (hdmf %s)'%(pynwb.__version__,hdmf_ver)
+    info = 'Example NWB file created with pynwb v%s (hdmf %s), Python v%s'%(pynwb.__version__,hdmf_ver,platform.python_version())
 
     nwbfile = pynwb.NWBFile('Example structured data',
                             'TSD',
