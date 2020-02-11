@@ -64,21 +64,24 @@ def print_info(args):
     print('  Info on %s (%s bytes; modified: %s)'%(args.nwb_file, os.path.getsize(args.nwb_file), mod))
     
     from pynwb import NWBHDF5IO
-    io = NWBHDF5IO(args.nwb_file, 'r')
-    nwbfile_in = io.read()
-    
-    a = nwbfile_in
-    #print(dir(a))
-    #for s in dir(a):
-    #    print('-- %s '%(s))
-        
-    key_fields = ['name','notes','subject']
-    for k in key_fields:
-        print('    %s = %s'%(k, getattr(nwbfile_in,k)))
-        
-    #print(nwbfile_in.fields.keys())
-    #print(nwbfile_in.general)
-    print('Finished looking at file %s'%args.nwb_file)
+    if args is not None: 
+        io = NWBHDF5IO(args.nwb_file, 'r')
+        nwbfile_in = io.read()
+
+        a = nwbfile_in
+        #print(dir(a))
+        #for s in dir(a):
+        #    print('-- %s '%(s))
+
+        key_fields = ['name','notes','subject']
+        for k in key_fields:
+            print('    %s = %s'%(k, getattr(nwbfile_in,k)))
+
+        #print(nwbfile_in.fields.keys())
+        print('Notes: %s'%nwbfile_in.notes)
+        print('Finished looking at file %s'%args.nwb_file)
+
+        return nwbfile_in
 
     
 def main(args=None):

@@ -23,6 +23,8 @@ install:
 script:
     - cd NWB
     - python simple.py
+    - python nwb_info.py simple.nwb
+    
     - python time_series_data.py
     - python nwb_info.py time_series_data.nwb
     - ls -alt
