@@ -23,7 +23,7 @@ install:
 script:
     - cd NWB
     - python simple.py
-    - python nwb_info.py simple.nwb
+    - python nwb_info.py simple_example.nwb
     
     - python time_series_data.py
     - python nwb_info.py time_series_data.nwb
@@ -35,6 +35,7 @@ script:
     
     - cd ../TriplettEtAl2018
     - runipy TestDataset.ipynb 
+    - python ../NWB/nwb_info.py TriplettEtAl2018.nwb
     - ls -alt
     
     - cd ../ScholzEtAl2019
