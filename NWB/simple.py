@@ -18,6 +18,8 @@ nwbfile = pynwb.NWBFile('PyNWB tutorial',
                   notes=info)
 
 nwb_file_name='simple_example.nwb'
+
+print('Saving NWB file: %s'%nwbfile)
 io = pynwb.NWBHDF5IO(nwb_file_name, mode='w')
 
 print("Written: %s"%info)
