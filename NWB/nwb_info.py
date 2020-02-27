@@ -45,7 +45,7 @@ def print_info(args):
             
     print('  Info on Python (v%s) packages:'%platform.python_version())
 
-    for m in ['pynwb', 'hdmf','numpy','pandas','scipy','six','h5py','pyabf','imageio','pillow','PIL','dateutil']:
+    for m in sorted(['pynwb', 'hdmf','numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
         installed_ver = False
         try:
             exec('import %s'%m)
@@ -60,28 +60,42 @@ def print_info(args):
       
  
     mod = time.ctime(os.path.getmtime(args.nwb_file))
- 
-    print('  Info on %s (%s bytes; modified: %s)'%(args.nwb_file, os.path.getsize(args.nwb_file), mod))
-    
-    from pynwb import NWBHDF5IO
+
     if args is not None: 
-        io = NWBHDF5IO(args.nwb_file, 'r')
-        nwbfile_in = io.read()
+        print('\nInfo on %s (%s bytes; modified: %s)'%(args.nwb_file, os.path.getsize(args.nwb_file), mod))
 
-        a = nwbfile_in
-        #print(dir(a))
-        #for s in dir(a):
-        #    print('-- %s '%(s))
+        import h5py
+        h5py_file = h5py.File(args.nwb_file, 'r')
+        h5py_file
+        for a in h5py_file.attrs:
+            print('    Attr   %s =\t %s'%(a, h5py_file.attrs[a]))
+            
+        general = h5py_file.get('general')
+        for ff in ['lab','experimenter', 'institution', 'lab', 'notes']:
+            print('    Field  %s =\t %s'%(ff, general.get(ff)[()] if ff in general else '---'))
 
-        key_fields = ['name','notes','subject']
-        for k in key_fields:
-            print('    %s = %s'%(k, getattr(nwbfile_in,k)))
+        print('Successfully read file with h5py v%s\n'%h5py.__version__)
+        #exit()
+        try:
+            from pynwb import NWBHDF5IO, __version__
+            from pynwb import __version__ as pynwb_version
+            io = NWBHDF5IO(args.nwb_file, 'r')
+            nwbfile_in = io.read()
+            print('Successfully opened file with pynwb v%s'%pynwb_version)
 
-        #print(nwbfile_in.fields.keys())
-        print('Notes: %s'%nwbfile_in.notes)
-        print('Finished looking at file %s'%args.nwb_file)
+            a = nwbfile_in
 
-        return nwbfile_in
+            key_fields = ['name','notes','subject']
+            for k in key_fields:
+                print('    %s = %s'%(k, getattr(nwbfile_in,k)))
+            #print(nwbfile_in.fields.keys())
+            print('Notes: %s'%nwbfile_in.notes)
+            print('Finished looking at file %s'%args.nwb_file)
+
+            return nwbfile_in
+        except Exception as e:
+            print('Error loading via pynwb!')
+            print(e)
 
     
 def main(args=None):
