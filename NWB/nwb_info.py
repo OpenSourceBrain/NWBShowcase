@@ -3,6 +3,7 @@
 import platform
 import os
 import time
+import numpy
 
 def parse_arguments():
     """Parse command line arguments"""
@@ -39,47 +40,106 @@ def parse_arguments():
 
     return parser.parse_args()
 
-def print_info(args):
+
+def _h5_info(h5_item, prefix):
+    
+    if len(h5_item.attrs)>0:
+        #print('    %s %s =\t %s'%(prefix if len(prefix)>0 else '(root)', a, h5_item.attrs[a]))
+        for k in h5_item.attrs:
+            v = h5_item.attrs[k]
+            attr_info='%s = \t%s '%(k,v)
+            print('        %s'%(attr_info))
+            
+    for k,v in    h5_item.items():
+        #print(dir(v))
+        if 'Dataset' in str(type(v)):
+            #print(dir(v))
+            data = v.dtype
+            
+            max_len = 80
+            data_value = v[()]
+            str_data = str(data_value)
+            trunc_str_data = '\''+str_data[:max_len]+('...\' (%i chars)'%len(str_data) if len(str_data)>max_len else '\'')
+            if type(data_value)==bytes:
+                data = 'B: '+trunc_str_data
+                '''elif type(data_value)==unicode:
+                data = 'U: '+trunc_str_data'''
+            elif type(data_value)==str:
+                data = trunc_str_data
+            elif type(data_value)==numpy.ndarray:
+                data = 'ndarray: '+str_data
+            else:
+                data = '%s (??) = %s'%(type(data_value),str_data)
+                
+            print('    %s/%s = \t%s'%(prefix, k,data))
+            if len(v.attrs)>0:
+                #print('    %s %s =\t %s'%(prefix if len(prefix)>0 else '(root)', a, h5_item.attrs[a]))
+                for kk in v.attrs:
+                    vv = v.attrs[kk]
+                    attr_info='%s = \t%s '%(kk,vv)
+                    print('        %s'%(attr_info))
+            
+        elif 'Group' in str(type(v)):
+            print('    %s/%s'%(prefix, k))
+            _h5_info(v, '%s/%s'%(prefix,k))
+        else:
+            print('    %s/%s = %s (%s) %s'%(prefix, k,v,type(v),[a for a in v.attrs] if len(v.attrs)>0 else ''))
+
+def print_info(nwb_file, verbose=True):
     
     print('NWB info')
             
-    print('  Info on Python (v%s) packages:'%platform.python_version())
 
-    for m in sorted(['pynwb', 'hdmf','numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
-        installed_ver = False
-        try:
-            exec('import %s'%m)
-            if m == 'hdmf':
-                import hdmf._version
-                installed_ver = 'v%s'%hdmf._version.get_versions()['version']
-            else:
-                installed_ver = 'v%s'%eval('%s.__version__'%m)
-        except Exception as e:
-            installed_ver = '???'
-        print('    %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
+    if verbose:
+        print('  Info on Python (v%s) packages:'%platform.python_version())
+
+        for m in sorted(['pynwb', 'hdmf','numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
+            installed_ver = False
+            try:
+                exec('import %s'%m)
+                if m == 'hdmf':
+                    import hdmf._version
+                    installed_ver = 'v%s'%hdmf._version.get_versions()['version']
+                else:
+                    installed_ver = 'v%s'%eval('%s.__version__'%m)
+            except Exception as e:
+                installed_ver = '???'
+            print('    %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
       
  
-    mod = time.ctime(os.path.getmtime(args.nwb_file))
+    mod = time.ctime(os.path.getmtime(nwb_file))
 
-    if args is not None: 
-        print('\nInfo on %s (%s bytes; modified: %s)'%(args.nwb_file, os.path.getsize(args.nwb_file), mod))
+    if nwb_file is not None: 
+        print('\nInfo on %s (%s bytes; modified: %s)'%(nwb_file, os.path.getsize(nwb_file), mod))
 
         import h5py
-        h5py_file = h5py.File(args.nwb_file, 'r')
+        h5py_file = h5py.File(nwb_file, 'r')
         h5py_file
         for a in h5py_file.attrs:
             print('    Attr   %s =\t %s'%(a, h5py_file.attrs[a]))
             
-        general = h5py_file.get('general')
-        for ff in ['lab','experimenter', 'institution', 'lab', 'notes']:
-            print('    Field  %s =\t %s'%(ff, general.get(ff)[()] if ff in general else '---'))
+        if nwb_file.endswith('.nwb'):
+            general = h5py_file.get('general')
+            if general is not None:
+                for ff in ['lab','experimenter', 'institution', 'lab', 'notes']:
+                    val = '---'
+                    if ff in general:
+                        v = general.get(ff)
+                        val = v[()] if v is not None else '?'
+                    print('    Field  %s =\t %s'%(ff, val))
+        
+        if verbose:
+            print('\nHDF5 summary:')
+            _h5_info(h5py_file,'')
 
         print('Successfully read file with h5py v%s\n'%h5py.__version__)
         #exit()
-        try:
+        
+        if nwb_file .endswith('.nwb'):
             from pynwb import NWBHDF5IO, __version__
             from pynwb import __version__ as pynwb_version
-            io = NWBHDF5IO(args.nwb_file, 'r')
+            #io = NWBHDF5IO(nwb_file, 'r', load_namespaces=True)
+            io = NWBHDF5IO(nwb_file, 'r')
             nwbfile_in = io.read()
             print('Successfully opened file with pynwb v%s'%pynwb_version)
 
@@ -90,12 +150,9 @@ def print_info(args):
                 print('    %s = %s'%(k, getattr(nwbfile_in,k)))
             #print(nwbfile_in.fields.keys())
             print('Notes: %s'%nwbfile_in.notes)
-            print('Finished looking at file %s'%args.nwb_file)
+            print('Finished looking at file %s'%nwb_file)
 
             return nwbfile_in
-        except Exception as e:
-            print('Error loading via pynwb!')
-            print(e)
 
     
 def main(args=None):
@@ -104,7 +161,7 @@ def main(args=None):
     if args is None:
         args = parse_arguments()
 
-    print_info(args)
+    print_info(args.nwb_file, args.verbose)
 
 
 if __name__ == "__main__":
