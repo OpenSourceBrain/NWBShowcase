@@ -15,14 +15,18 @@ def create_nwb_file():
     acquisition.test_sine_2
     :return:
     '''
-    start_time = datetime(2019, 1, 1, 11, tzinfo=tzlocal())
+    start_time = datetime.now(tz=tzlocal())
     create_date = datetime.now(tz=tzlocal())
+
+    import hdmf._version
+    hdmf_ver = 'v%s'%hdmf._version.get_versions()['version']
+    info = 'An example NWB file created with pynwb v%s (hdmf %s), Python v%s'%(pynwb.__version__,hdmf_ver,platform.python_version())
     
     # FIXME: this attr breaks nwb-explorer
     # date_of_birth=create_date 
     sub = pynwb.file.Subject(
         age='33.',
-        description='Synthetic data',
+        description='Synthetic data: %s'%info,
         genotype='AA.',
         sex='F.',
         species='Homo Sapiens.',
@@ -30,18 +34,12 @@ def create_nwb_file():
         weight='233lb.'
     )
 
-    import hdmf._version
-    hdmf_ver = 'v%s'%hdmf._version.get_versions()['version']
-    info = 'Example NWB file created with pynwb v%s (hdmf %s), Python v%s'%(pynwb.__version__,hdmf_ver,platform.python_version())
-
-    nwbfile = pynwb.NWBFile('Example structured data',
+    nwbfile = pynwb.NWBFile('Example structured data - some sines and images',
                             'TSD',
                             start_time,
                             file_create_date=create_date,
-                            session_description='Home.',
-                            identifier='SF-238.',
                             notes=info,
-                            experimenter='Dorothy M. Thomas.',
+                            experimenter='Norman Woodford Bailey II',
                             experiment_description='We use a python script to synthetize this data.',
                             institution='Institute AACDDSAQ',
                             session_id='NR-22232.',
@@ -69,8 +67,7 @@ def create_nwb_file():
                                                  device=device)
     # Add Electrodes
     for idx in range(1, 5):
-        nwbfile.add_electrode(idx,
-                          x=1.0, y=2.0, z=3.0,
+        nwbfile.add_electrode(x=1.0, y=2.0, z=3.0,
                           imp=float(-idx),
                           location='CA1', 
                           filtering='Description of hardware filtering.',
@@ -85,14 +82,14 @@ def create_nwb_file():
                         data=np.sin(timestamps/4),
                         timestamps=timestamps,
                         unit='mV',
-                        comments='Human-readable comments about this TimeSeries dataset.',
-                        description='Description of this TimeSeries dataset.')
+                        comments='Just a sine wave...',
+                        description='Description of this sine wave.')
 
     ts2 = pynwb.TimeSeries(name='test_sine_2', 
                         data=np.cos(timestamps/4),
                         unit='pA',
                         timestamps=timestamps,
-                        comments='Another human-readable comments about this TimeSeries dataset.',
+                        comments='Just another sine wave....',
                         description='Another description of this TimeSeries dataset.',
                         )
     
@@ -100,6 +97,9 @@ def create_nwb_file():
     nwbfile.add_acquisition(ts2)
 
     nwbfile.add_acquisition(create_image('test_image_1', nwbfile))
+    
+    
+    print("Written: %s"%info)
 
     return nwbfile
 
@@ -121,7 +121,7 @@ def create_image(name, nwbfile):
     return ImageSeries(name='test_image_series',
                                external_file=images_url,
                                timestamps=timestamps,
-                               starting_frame=np.zeros(n), 
+                               starting_frame=np.zeros(n, dtype=int), 
                                format='external', 
                                description='Series of images from a simulation of the cerebellum via neuroConstruct')
 
