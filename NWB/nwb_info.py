@@ -145,7 +145,7 @@ def print_info(nwb_file, verbose=True):
 
             a = nwbfile_in
 
-            key_fields = ['name','notes','subject']
+            key_fields = ['name','notes','subject','experimenter']
             for k in key_fields:
                 print('    %s = %s'%(k, getattr(nwbfile_in,k)))
             #print(nwbfile_in.fields.keys())
