@@ -139,7 +139,14 @@ def print_info(nwb_file, verbose=True):
             from pynwb import NWBHDF5IO, __version__
             from pynwb import __version__ as pynwb_version
             #io = NWBHDF5IO(nwb_file, 'r', load_namespaces=True)
-            io = NWBHDF5IO(nwb_file, 'r')
+            silver_ext = False
+            if not silver_ext:
+                io = NWBHDF5IO(nwb_file, 'r')
+                print('Loaded without Silverlab extensions')
+            else:
+                io = NWBHDF5IO(nwb_file, 'r', extensions = ['/home/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.metadata.yaml','/home/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.ophys.yaml'], load_namespaces=True)
+                print('Loaded with Silverlab extensions')
+                
             nwbfile_in = io.read()
             print('Successfully opened file with pynwb v%s'%pynwb_version)
 
