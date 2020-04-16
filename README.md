@@ -1,6 +1,7 @@
 # NWB Showcase
 
-Open Source Brain Showcase project containing examples of [Neurodata Without Borders (NWB)](https://www.nwb.org/) data. OSB is developing the infrastructure to visualise and analyse experimental data which has been shared publicly in NWB format.
+Open Source Brain Showcase project containing examples of [Neurodata Without Borders (NWB)](https://www.nwb.org/) data. 
+OSB is developing the infrastructure to visualise and analyse experimental data in neuroscience which has been shared publicly in NWB format.
 
 This repository will contain **some example datasets** which we will convert to NWB to test this functionality. 
 
@@ -69,7 +70,8 @@ This data can be viewed with [NWB Explorer](http://nwbexplorer.opensourcebrain.o
 
 ## 6) More datasets to convert
 
-There are a list of potentially interesting datasets [here](https://github.com/OpenSourceBrain/NWBShowcase/issues) containing publicly available experimental data which could be converted to NWB format. Suggestions welcome!!
+There are a list of potentially interesting datasets [here](https://github.com/OpenSourceBrain/NWBShowcase/issues) containing publicly available experimental data which could be converted to NWB format. 
+**Suggestions for more are welcome!!**
 
 
 [![Build Status](https://travis-ci.org/OpenSourceBrain/NWBShowcase.svg?branch=master)](https://travis-ci.org/OpenSourceBrain/NWBShowcase)
