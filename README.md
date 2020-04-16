@@ -73,6 +73,12 @@ This data can be viewed with [NWB Explorer](http://nwbexplorer.opensourcebrain.o
 There are a list of potentially interesting datasets [here](https://github.com/OpenSourceBrain/NWBShowcase/issues) containing publicly available experimental data which could be converted to NWB format. 
 **Suggestions for more are welcome!!**
 
+## 7) Future plans
+
+We are currently planning a new version of the Open Source Brain website (OSBv2) which will have a much deeper integration of model sharing (in NeuroML format)
+and data sharing (in NWB format) into a unified platform for collaborating and sharing research outputs in neuroscience. Stay tuned!
+
+
 
 [![Build Status](https://travis-ci.org/OpenSourceBrain/NWBShowcase.svg?branch=master)](https://travis-ci.org/OpenSourceBrain/NWBShowcase)
 
