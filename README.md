@@ -29,7 +29,7 @@ Other information located in the NWB file about the experiment (e.g. at **/gener
 
 However, HDFViewer doesn't treat NWB files differently from any other HDF5 file, and there are no special provisions for the types of data and metadat present in such files.
 
-[NWB Explorer](http://nwbexplorer.opensourcebrain.org) on the other hand does know about the structure of NWB data files, and presents this in an easily accessible way. Go to http://nwbexplorer.opensourcebrain.org and click on "Simple time series":
+[NWB Explorer](http://nwbexplorer.opensourcebrain.org) ([source](https://github.com/MetaCell/nwb-explorer)) on the other hand does know about the structure of NWB data files, and presents this in an easily accessible way. Go to http://nwbexplorer.opensourcebrain.org and click on "Simple time series":
 
 <img src="images/timeseries_nwbe.png" width=400/>
 
@@ -75,8 +75,11 @@ There are a list of potentially interesting datasets [here](https://github.com/O
 
 ## 7) Future plans
 
-We are currently planning a new version of the Open Source Brain website (OSBv2) which will have a much deeper integration of model sharing (in NeuroML format)
-and data sharing (in NWB format) into a unified platform for collaborating and sharing research outputs in neuroscience. Stay tuned!
+Ongoing work on NWB Explorer can be followed [here](https://github.com/MetaCell/nwb-explorer/issues).
+
+We are currently planning a new version of the Open Source Brain website (OSBv2) which will have a much deeper integration of model sharing (in NeuroML format) and data sharing (in NWB format) into a unified platform for collaborating and sharing research outputs in neuroscience. 
+
+Stay tuned!
 
 
 
