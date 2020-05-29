@@ -144,7 +144,7 @@ def print_info(nwb_file, verbose=True):
             from pynwb import NWBHDF5IO, __version__
             from pynwb import __version__ as pynwb_version
             #io = NWBHDF5IO(nwb_file, 'r', load_namespaces=True)
-            silver_ext = True
+            silver_ext = False
             if not silver_ext:
                 io = NWBHDF5IO(nwb_file, 'r')
                 print('Loaded without Silverlab extensions')
