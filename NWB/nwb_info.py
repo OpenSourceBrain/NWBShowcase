@@ -84,6 +84,11 @@ def _h5_info(h5_item, prefix):
             _h5_info(v, '%s/%s'%(prefix,k))
         else:
             print('    %s/%s = %s (%s) %s'%(prefix, k,v,type(v),[a for a in v.attrs] if len(v.attrs)>0 else ''))
+            
+            
+def array_info(a, name):
+    print('Array %s: len %i, %s->%s, max %s, min %s'%(name, len(a), a[0],a[-1], max(a), min(a)))
+    
 
 def print_info(nwb_file, verbose=True):
     
@@ -139,12 +144,16 @@ def print_info(nwb_file, verbose=True):
             from pynwb import NWBHDF5IO, __version__
             from pynwb import __version__ as pynwb_version
             #io = NWBHDF5IO(nwb_file, 'r', load_namespaces=True)
-            silver_ext = False
+            silver_ext = True
             if not silver_ext:
                 io = NWBHDF5IO(nwb_file, 'r')
                 print('Loaded without Silverlab extensions')
             else:
-                io = NWBHDF5IO(nwb_file, 'r', extensions = ['/home/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.metadata.yaml','/home/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.ophys.yaml'], load_namespaces=True)
+                from pynwb import get_class, load_namespaces, NWBHDF5IO
+
+                load_namespaces('/Users/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.namespace.yaml')
+                get_class('ZplanePockelsDataset', 'silverlab_extended_schema')
+                io = NWBHDF5IO(nwb_file, 'r')
                 print('Loaded with Silverlab extensions')
                 
             nwbfile_in = io.read()
