@@ -178,14 +178,14 @@ for cell, current_step, initial_current, f in zip(cells,current_steps,initial_cu
 
         inj_current = (sweep + 1.) * current_step + initial_current
         description = ('Sweep %i, applied current'
-                        '(pulse ~%s pA%s)')%(sweep,inj_current,
+                        '(pulse ~%s pA%s)')%(sweep+1,inj_current,
                                             '' if not 'PYR5_rebound' in f
                                             else ', cell held at -52mV')
 
         gain = 1. # Unspecified placeholder                                      ## Assumed unity gain amplifier
 
         csss = CurrentClampStimulusSeries(
-                         name='CurrentClampStimulusSeries_%i'%sweep,             ## As a default, name class instances with the same name as the class
+                         name='CurrentClampStimulusSeries_%i'%(sweep+1),         ## As a default, name class instances with the same name as the class
                          description=description,
                          stimulus_description=protocol + ' protocol',
                          sweep_number=sweep,
@@ -218,14 +218,14 @@ for cell, current_step, initial_current, f in zip(cells,current_steps,initial_cu
 
         inj_current = (sweep + 1.) * current_step + initial_current
         description = ('Sweep %i, membrane potential response '
-                        '(To pulse ~%s pA%s)')%(sweep,inj_current,
+                        '(To pulse ~%s pA%s)')%(sweep+1,inj_current,
                                             '' if not 'PYR5_rebound' in f
                                             else ', cell held at -52mV')
 
         gain = 1.                                                                ## Assumed unity gain amplifier
 
         css = CurrentClampSeries(
-                         name='CurrentClampSeries_%i'%sweep,                     ## As a default, name class instances with the same name as the class
+                         name='CurrentClampSeries_%i'%(sweep+1),                 ## As a default, name class instances with the same name as the class
                          description=description,
                          stimulus_description=protocol + ' protocol',
                          sweep_number=sweep,
