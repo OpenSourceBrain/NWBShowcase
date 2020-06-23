@@ -98,17 +98,17 @@ def print_info(nwb_file, verbose=True):
     if verbose:
         print('  Info on Python (v%s) packages:'%platform.python_version())
 
-        for m in sorted(['pynwb', 'hdmf','numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
+        for m in sorted(['pynwb', 'hdmf', 'nwbwidgets', 'numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
             installed_ver = False
             try:
                 exec('import %s'%m)
-                if m == 'hdmf':
-                    import hdmf._version
-                    installed_ver = 'v%s'%hdmf._version.get_versions()['version']
-                else:
+                installed_ver = 'yes, unknown version'
+                try:
                     installed_ver = 'v%s'%eval('%s.__version__'%m)
+                except:
+                    pass
             except Exception as e:
-                installed_ver = '???'
+                installed_ver = 'no'
             print('    %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
       
  
