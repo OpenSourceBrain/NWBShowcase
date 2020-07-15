@@ -15,21 +15,21 @@ The script [build.py](https://github.com/vrhaynes/NWBShowcase/blob/master/Lantye
 <img src="images/Lantyer_0_voltage.png" width=400/>
 
 ### 2) Current Clamp 2 (170502_AL_257_CC.mat)
-<img src="images/Lantyer_1_PYR2_current.png" width=400/>
-<img src="images/Lantyer_1_PYR2_voltage.png" width=400/>
+<img src="images/Lantyer_1_current.png" width=400/>
+<img src="images/Lantyer_1_voltage.png" width=400/>
 
 ### 3) Voltage Clamp 1 (170328_AL_238_VC.mat)
-<img src="images/Lantyer_2_PYR3_current.png" width=400/>
-<img src="images/Lantyer_2_PYR3_voltage.png" width=400/>
+<img src="images/Lantyer_2_current.png" width=400/>
+<img src="images/Lantyer_2_voltage.png" width=400/>
 
 ### 4) Voltage Clamp 2 (170315_AL_216_VCC.mat)
-<img src="images/Lanter_3_PYR4_current.png" width=400/>
-<img src="images/Lanter_3_PYR4_voltage.png" width=400/>
+<img src="images/Lanter_3_current.png" width=400/>
+<img src="images/Lanter_3_voltage.png" width=400/>
 
 ### 5) Voltage Clamp - Sawtooth 1 (171220_NC_156_ST100_C.mat)
-<img src="images/Lanter_4_PYR5_rebound_current.png" width=400/>
-<img src="images/Lanter_4_PYR5_rebound_voltage.png" width=400/>
+<img src="images/Lanter_4_current.png" width=400/>
+<img src="images/Lanter_4_voltage.png" width=400/>
 
 ### 6) Voltage Clamp - Sawtooth 2 (170328_AB_277_ST50_C.mat)
-<img src="images/Lanter_5_PYR5_rebound_current.png" width=400/>
-<img src="images/Lanter_5_PYR5_rebound_voltage.png" width=400/>
+<img src="images/Lanter_5_current.png" width=400/>
+<img src="images/Lanter_5_voltage.png" width=400/>
