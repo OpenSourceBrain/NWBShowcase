@@ -23,13 +23,13 @@ The script [build.py](https://github.com/vrhaynes/NWBShowcase/blob/master/Lantye
 <img src="images/Lantyer_2_voltage.png" width=400/>
 
 ### 4) Voltage Clamp 2 (170315_AL_216_VCC.mat)
-<img src="images/Lanter_3_current.png" width=400/>
-<img src="images/Lanter_3_voltage.png" width=400/>
+<img src="images/Lantyer_3_current.png" width=400/>
+<img src="images/Lantyer_3_voltage.png" width=400/>
 
 ### 5) Voltage Clamp - Sawtooth 1 (171220_NC_156_ST100_C.mat)
-<img src="images/Lanter_4_current.png" width=400/>
-<img src="images/Lanter_4_voltage.png" width=400/>
+<img src="images/Lantyer_4_current.png" width=400/>
+<img src="images/Lantyer_4_voltage.png" width=400/>
 
 ### 6) Voltage Clamp - Sawtooth 2 (170328_AB_277_ST50_C.mat)
-<img src="images/Lanter_5_current.png" width=400/>
-<img src="images/Lanter_5_voltage.png" width=400/>
+<img src="images/Lantyer_5_current.png" width=400/>
+<img src="images/Lantyer_5_voltage.png" width=400/>
