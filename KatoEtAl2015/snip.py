@@ -62,15 +62,14 @@ for trace_i in range(num_traces):
         for t in range(len(trace)):
             pcomps[comp_i][t] += X[trace_i][comp_i] * trace[t]
 
-for comp_i in range(n_components):          
-    pca_ax.plot(times, pcomps[comp_i], lw=.5, label='PC%s'%comp_i)
-          
+for comp_i in range(n_components):                
+    pca_ax.plot(times, pcomps[comp_i], lw=.5, label='PC%s'%(comp_i+1))
+        
+plt.legend()  
 plt.show()
         
 to_dat(times,pcomps,'split.dat')
             
-
-
 
 
 
@@ -91,9 +90,15 @@ trace = go.Scatter3d(
 
 # Configure the layout.
 layout = go.Layout(
-    margin={'l': 0, 'r': 0, 'b': 0, 't': 0}
+    margin={'l': 0, 'r': 0, 'b': 0, 't': 0},    
+    scene = dict(
+    xaxis = dict(
+        title='PC1'),
+    yaxis = dict(
+        title='PC2'),
+    zaxis = dict(
+        title='PC3'),),
 )
-
 data = [trace]
 
 plot_figure = go.Figure(data=data, layout=layout)
