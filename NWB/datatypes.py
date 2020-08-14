@@ -2,12 +2,16 @@ from datetime import datetime
 
 import numpy as np
 import pynwb
+import math
 from dateutil.tz import tzlocal
 
 from pynwb import NWBHDF5IO
 from pynwb.device import Device
 from pynwb.image import ImageSeries
 import platform
+
+def _info(a):
+    print('%i points: [%s, %s, ..., %s]; max %s, min %s'%(len(a), a[0], a[1], a[-1], a.max(), a.min()))
 
 def create_nwb_file():
     
@@ -46,17 +50,69 @@ def create_nwb_file():
     # Electrode table
     electrode_table_region = nwbfile.create_electrode_table_region([0, 2], 'The first and third electrodes.')
 
-    N = 100
+    N = 2001
     timestamps = np.arange(N) 
-
-    ts1 = pynwb.TimeSeries(name='test_sine_1', 
-                        data=np.sin(timestamps/4),
-                        timestamps=timestamps,
-                        unit='mV',
-                        comments='Just a sine wave...',
+    
+    s_timestamps = 1 + np.arange(N)*0.001
+    _info(s_timestamps)
+    ms_timestamps = s_timestamps*1000
+    _info(ms_timestamps)
+    
+    mvolts = 50*np.sin(s_timestamps*10)-20
+    _info(mvolts)
+    volts=mvolts*0.001
+    _info(volts)
+    
+    ts1 = pynwb.TimeSeries(name='test_volt_s_sine', 
+                        data=volts,
+                        timestamps=s_timestamps,
+                        unit='V',
+                        comments='Just a sine wave (V/s)...',
                         description='Description of this sine wave.')
 
     nwbfile.add_acquisition(ts1)
+    
+    ts2 = pynwb.TimeSeries(name='test_mvolt_s_sine', 
+                        data=mvolts,
+                        timestamps=s_timestamps,
+                        unit='mV',
+                        comments='Just a sine wave (mV/s)...',
+                        description='Description of this sine wave.')
+
+    nwbfile.add_acquisition(ts2)
+    
+    ts3 = pynwb.TimeSeries(name='test_mvolt_s_conversion_sine', 
+                        data=volts,
+                        timestamps=s_timestamps,
+                        conversion=1000.0,
+                        unit='mV',
+                        comments='Just a sine wave (mV/s + conversion)...',
+                        description='Description of this sine wave.')
+
+    nwbfile.add_acquisition(ts3)
+    
+    
+    
+    ts4 = pynwb.TimeSeries(name='test_volt_s_rate_sine', 
+                        data=volts,
+                        starting_time = s_timestamps[0],
+                        rate = 1/(s_timestamps[1]-s_timestamps[0]),
+                        unit='V',
+                        comments='Just a sine wave (V/s)...',
+                        description='Description of this sine wave.')
+
+    nwbfile.add_acquisition(ts4)
+    
+    ts4 = pynwb.TimeSeries(name='test_mvolt_s_rate_sine', 
+                        data=mvolts,
+                        starting_time = s_timestamps[0],
+                        rate = 1/(s_timestamps[1]-s_timestamps[0]),
+                        unit='mV',
+                        comments='Just a sine wave (mV/s)...',
+                        description='Description of this sine wave.')
+
+    nwbfile.add_acquisition(ts4)
+    
     
     ss1 = pynwb.behavior.SpatialSeries(name='spatial_series_1D', 
                         reference_frame='Zero is origin..?',
