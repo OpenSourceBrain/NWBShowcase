@@ -34,15 +34,15 @@ def create_nwb_file():
         weight='233lb.'
     )
 
-    nwbfile = pynwb.NWBFile('Example structured data - some sines and images',
-                            'TSD',
+    nwbfile = pynwb.NWBFile('Some data for testing NWB Explorer - some sine waves and images',
+                            'TSD123',
                             start_time,
                             file_create_date=create_date,
                             notes=info,
                             experimenter='Norman Woodford Bailey II',
-                            experiment_description='We use a python script to synthetize this data.',
+                            experiment_description='We used a Python script to synthetize this data.',
                             institution='Institute AACDDSAQ',
-                            session_id='NR-22232.',
+                            session_id='NR-22232',
                             keywords=['behavioural', 'EEG'],
                             pharmacology='No anesthesia or painkillers were used during this session.',
                             protocol='IACUC protocol.',

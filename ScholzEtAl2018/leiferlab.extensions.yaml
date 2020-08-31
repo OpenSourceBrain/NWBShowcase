@@ -1,0 +1,145 @@
+groups:
+- neurodata_type_def: NeuronPositionTable
+  neurodata_type_inc: NWBDataInterface
+  doc: A custom NeuronPositionTable for Leifer lab
+  attributes:
+  - name: origin_coords
+    dtype: float64
+    shape:
+    - 3
+    doc: Physical location of the first element of the neural volume such as (0,0,0)
+      for 3D data
+    required: false
+  - name: description
+    dtype: text
+    doc: Description of this table
+  datasets:
+  - name: neuron_id
+    dtype: numeric
+    dims:
+    - num_neurons
+    shape:
+    - null
+    doc: Neuron IDs under specified ordering
+  - name: x_pos
+    dtype: numeric
+    dims:
+    - num_neurons
+    shape:
+    - null
+    doc: Neuron 1D X-position previously extracted from image stacks
+  - name: y_pos
+    dtype: numeric
+    dims:
+    - num_neurons
+    shape:
+    - null
+    doc: Neuron 1D Y-position previously extracted from image stacks
+  - name: z_pos
+    dtype: numeric
+    dims:
+    - num_neurons
+    shape:
+    - null
+    doc: Neuron 1D Z-position previously extracted from image stacks
+- neurodata_type_def: ChannelGroup
+  neurodata_type_inc: NWBDataInterface
+  doc: A custom ChannelGroup for Leifer lab
+  attributes:
+  - name: description
+    dtype: text
+    doc: Description of this group pertaining to differences in channels
+  links:
+  - name: device
+    target_type: Device
+    doc: Link to Device object used to record
+  - name: green_optical_channel
+    target_type: OpticalChannel
+    doc: Link to specific optical channel for GCAMP6
+  - name: red_optical_channel
+    target_type: OpticalChannel
+    doc: Link to specific optical channel for red
+- neurodata_type_def: ResponseSeries
+  neurodata_type_inc: TimeSeries
+  doc: A custom ResponseSeries for Leifer lab
+  attributes:
+  - name: neuron_id
+    dtype: int
+    doc: Neuron IDs under specified ordering
+  - name: description
+    dtype: text
+    default_value: no description
+    doc: Description of time series
+    required: false
+  - name: comments
+    dtype: text
+    default_value: no comment
+    doc: Human-readable comments about the timeseries
+    required: false
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - - num_times
+    - - num_times
+      - num_neurons
+    shape:
+    - null
+    - - null
+      - null
+    doc: Neural response signal
+  - name: timestamps
+    dtype: float64
+    dims:
+    - num_times
+    shape:
+    - null
+    doc: Timestamps for samples stored in data, in seconds
+  links:
+  - name: optical_channel
+    target_type: OpticalChannel
+    doc: Link to specific channels used for this timeseries
+    quantity: '*'
+- neurodata_type_def: CenterlineSeries
+  neurodata_type_inc: SpatialSeries
+  doc: A custom CenterlineSeries for Leifer lab
+  attributes:
+  - name: origin_coords
+    dtype: float64
+    shape:
+    - 2
+    doc: Physical location of the first element of imaging volume such as (0,0) for
+      2D data
+    required: false
+  - name: coord_id
+    dtype: int
+    doc: Coordinate ID used to specify a point along each centerline
+  - name: description
+    dtype: text
+    default_value: no description
+    doc: Description of time series
+    required: false
+  - name: comments
+    dtype: text
+    default_value: no comment
+    doc: Human-readable comments about the timeseries
+    required: false
+  datasets:
+  - name: data
+    dtype: numeric
+    dims:
+    - num_times
+    - - num_times
+      - num_coords
+    shape:
+    - null
+    - - null
+      - null
+    doc: Positional data corresponding to specific relative coordinate
+  - name: timestamps
+    dtype: float64
+    dims:
+    - num_times
+    shape:
+    - null
+    doc: Timestamps for samples stored in data, in seconds

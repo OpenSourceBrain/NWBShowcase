@@ -84,6 +84,11 @@ def _h5_info(h5_item, prefix):
             _h5_info(v, '%s/%s'%(prefix,k))
         else:
             print('    %s/%s = %s (%s) %s'%(prefix, k,v,type(v),[a for a in v.attrs] if len(v.attrs)>0 else ''))
+            
+            
+def array_info(a, name):
+    print('Array %s: len %i, %s->%s, max %s, min %s'%(name, len(a), a[0],a[-1], max(a), min(a)))
+    
 
 def print_info(nwb_file, verbose=True):
     
@@ -93,17 +98,17 @@ def print_info(nwb_file, verbose=True):
     if verbose:
         print('  Info on Python (v%s) packages:'%platform.python_version())
 
-        for m in sorted(['pynwb', 'hdmf','numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
+        for m in sorted(['pynwb', 'hdmf', 'nwbwidgets', 'numpy','pandas','scipy','six','hdf5','h5py','pyabf','imageio','pillow','PIL','dateutil','av','tifffile']):
             installed_ver = False
             try:
                 exec('import %s'%m)
-                if m == 'hdmf':
-                    import hdmf._version
-                    installed_ver = 'v%s'%hdmf._version.get_versions()['version']
-                else:
+                installed_ver = 'yes, unknown version'
+                try:
                     installed_ver = 'v%s'%eval('%s.__version__'%m)
+                except:
+                    pass
             except Exception as e:
-                installed_ver = '???'
+                installed_ver = 'no'
             print('    %s%s(installed: %s)'%(m, ' '*(20-len(m)), installed_ver))
       
  
@@ -144,7 +149,11 @@ def print_info(nwb_file, verbose=True):
                 io = NWBHDF5IO(nwb_file, 'r')
                 print('Loaded without Silverlab extensions')
             else:
-                io = NWBHDF5IO(nwb_file, 'r', extensions = ['/home/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.metadata.yaml','/home/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.ophys.yaml'], load_namespaces=True)
+                from pynwb import get_class, load_namespaces, NWBHDF5IO
+
+                load_namespaces('/Users/padraig/git/PySilverLabNWB/src/silverlabnwb/silverlab.namespace.yaml')
+                get_class('ZplanePockelsDataset', 'silverlab_extended_schema')
+                io = NWBHDF5IO(nwb_file, 'r')
                 print('Loaded with Silverlab extensions')
                 
             nwbfile_in = io.read()
