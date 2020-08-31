@@ -10,13 +10,13 @@ The script [build.py](https://github.com/vrhaynes/NWBShowcase/blob/master/Scholz
 
 ### 1) Experiment 1 of AML18_moving.hdf5
 <p>
-  <img src="images/Scholz_0_0_neuron_xyz.png" width="200" />
-  <img src="images/Scholz_0_0_body_xy.png" width="200" /> 
-  <img src="images/Scholz_0_0_centerline.png" width="200" />
+  <img src="images/Scholz_0_0_neuron_xyz.png" width="300" />
+  <img src="images/Scholz_0_0_body_xy.png" width="300" /> 
+  <img src="images/Scholz_0_0_centerline.png" width="300" />
 </p>
 
 <p>
-  <img src="images/Scholz_0_0_ophys.png" width="200" />
-  <img src="images/Scholz_0_0_ethogram.png" width="200" /> 
-  <img src="images/Scholz_0_0_eigenworms.png" width="200" />
+  <img src="images/Scholz_0_0_ophys.png" width="300" />
+  <img src="images/Scholz_0_0_ethogram.png" width="300" /> 
+  <img src="images/Scholz_0_0_eigenworms.png" width="300" />
 </p>
