@@ -8,6 +8,8 @@ Source of data: http://gigadb.org/dataset/view/id/100535
 
 The script [build.py](https://github.com/vrhaynes/NWBShowcase/blob/master/Lantyer/build.py) generates all converted NWB format files from original MAT format files. [TestData.ipynb](https://github.com/vrhaynes/NWBShowcase/blob/master/Lanter/TestData.ipynb) is the primary Jupyter Notebook outlining necessary PyNWB elements for conversion. 
 
+Larger NWB files stored here: https://figshare.com/articles/dataset/Frozen_Noise_Datasets_-_Lantyer_et_al_2018/12780425
+
 ## Overview of data sets
 
 ### 1) Current Clamp 1 (180817_ME_9_CC.mat)
