@@ -4,7 +4,7 @@ Scholz, Monika. 2019. “Whole-Brain Neural Recordings of Freely Moving C. Elega
 
 Source of data: https://osf.io/mw5zs/
 
-The script [build.py](https://github.com/vrhaynes/NWBShowcase/blob/master/ScholzEtAl2019/build.py) generates all converted NWB format files from original MAT format files. [TestData.ipynb](https://github.com/vrhaynes/NWBShowcase/blob/master/ScholzEtAl2019/TestData.ipynb) is the primary Jupyter Notebook outlining necessary PyNWB elements for conversion. 
+The script [build.py](build.py) generates all converted NWB format files from original MAT format files. [TestData.ipynb](TestData.ipynb) is the primary Jupyter Notebook outlining necessary PyNWB elements for conversion. 
 
 Large datasets can be found here: https://figshare.com/articles/dataset/Large_File_Datasets_-_Scholz_et_al_2019/12895349
 
