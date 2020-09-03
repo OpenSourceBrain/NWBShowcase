@@ -34,8 +34,8 @@ script:
     - ls -alt
     
     - cd ../FergusonEtAl2015/
-    - runipy TestData.ipynb 
-    - ls -alt
+    - python build.py 
+    - ls -alth
     
     - cd ../TriplettEtAl2018
     - runipy TestDataset.ipynb 
