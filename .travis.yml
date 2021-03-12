@@ -16,8 +16,8 @@ python:
 
 install:
 
-    - pip install hdmf==2.3.0
-    - pip install pynwb==1.4.0
+    #- pip install hdmf==2.3.0
+    - pip install pynwb==1.4.0 # let pynwb choose hdmf
     - pip install runipy
     - pip install pyabf==2.1.10
     - pip install imageio==2.6.1
