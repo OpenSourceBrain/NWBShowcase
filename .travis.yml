@@ -3,11 +3,6 @@ dist: xenial
 
 language: python
 
-addons:
-  apt:
-    packages:
-    - python-numpy
-
 python:
   # - "2.7"
   - "3.6"
