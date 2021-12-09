@@ -1,0 +1,68 @@
+
+name: Continuous build using OMV
+
+on:
+  push:
+    branches: [ master, development, experimental ]
+  pull_request:
+    branches: [ master, development, experimental ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ 3.7, 3.9, 3.10 ]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python  ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version:  ${{ matrix.python-version }}
+        
+    - name: Install packages
+      run: |
+        pip install pynwb==1.4.0 runipy pyabf==2.1.10 imageio==2.6.1 seaborn
+        
+    - name:  Print info
+      run: |
+          cd NWB
+          python simple.py
+          python nwb_info.py simple_example.nwb
+
+          python time_series_data.py
+          python nwb_info.py time_series_data.nwb
+
+          python datatypes.py
+          python nwb_info.py datatypes.nwb
+          ls -alt
+
+    - name:  Test FergusonEtAl2015
+      run: |
+         cd FergusonEtAl2015/
+         python build.py
+         ls -alth
+
+
+    - name:  Test TriplettEtAl2018
+      run: |
+        cd TriplettEtAl2018
+        runipy TestDataset.ipynb
+        python ../NWB/nwb_info.py TriplettEtAl2018.nwb
+        ls -alt
+        
+        # NotImplementedError: unhandled mime type: text/markdown in runipy...
+        # - cd ../ScholzEtAl2018
+        # - wget https://osf.io/5298q/download -O AML18_moving.hdf5
+        # - wget https://osf.io/sgnrh/download -O AML175_moving.hdf5
+        # - runipy Testing.ipynb
+        # - ls -alt
+        
+    - name: Final version info
+      run: |
+        pip list
+        env
