@@ -26,7 +26,8 @@ jobs:
         
     - name: Install packages
       run: |
-        pip install pynwb==1.4.0 runipy pyabf==2.1.10 imageio==2.6.1 seaborn
+        pip install seaborn numpy
+        pip install pynwb==1.4.0 runipy pyabf==2.1.10 imageio==2.6.1
         
     - name:  Print info
       run: |
