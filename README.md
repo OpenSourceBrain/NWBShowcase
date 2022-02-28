@@ -1,5 +1,7 @@
 # NWB Showcase
 
+[![Continuous build](https://github.com/OpenSourceBrain/NWBShowcase/actions/workflows/omv-ci.yml/badge.svg)](https://github.com/OpenSourceBrain/NWBShowcase/actions/workflows/omv-ci.yml)
+
 Open Source Brain Showcase project containing examples of [Neurodata Without Borders (NWB)](https://www.nwb.org/) data.
 OSB is developing the infrastructure to visualise and analyse experimental data in neuroscience which has been shared publicly in NWB format.
 
@@ -80,7 +82,3 @@ Ongoing work on NWB Explorer can be followed [here](https://github.com/MetaCell/
 We are currently planning a new version of the Open Source Brain website (OSBv2) which will have a much deeper integration of model sharing (in NeuroML format) and data sharing (in NWB format) into a unified platform for collaborating and sharing research outputs in neuroscience.
 
 Stay tuned!
-
-
-
-[![Build Status](https://travis-ci.com/OpenSourceBrain/NWBShowcase.svg?branch=master)](https://travis-ci.com/OpenSourceBrain/NWBShowcase)
