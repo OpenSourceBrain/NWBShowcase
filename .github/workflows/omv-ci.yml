@@ -18,17 +18,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Set up Python  ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
         python-version:  ${{ matrix.python-version }}
-        
+
     - name: Install packages
       run: |
         pip install seaborn numpy
         pip install pynwb==2.0.0 runipy pyabf==2.1.10 imageio==2.6.1
-        
+
     - name:  Print info
       run: |
           cd NWB
@@ -52,17 +52,19 @@ jobs:
     - name:  Test TriplettEtAl2018
       run: |
         cd TriplettEtAl2018
+
+        pip install ipython
         runipy TestDataset.ipynb
         python ../NWB/nwb_info.py TriplettEtAl2018.nwb
         ls -alt
-        
+
         # NotImplementedError: unhandled mime type: text/markdown in runipy...
         # - cd ../ScholzEtAl2018
         # - wget https://osf.io/5298q/download -O AML18_moving.hdf5
         # - wget https://osf.io/sgnrh/download -O AML175_moving.hdf5
         # - runipy Testing.ipynb
         # - ls -alt
-        
+
     - name: Final version info
       run: |
         pip list
