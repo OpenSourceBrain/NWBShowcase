@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ 3.7, 3.8 ]
+        python-version: [ 3.7, 3.9 ]
 
     steps:
     - uses: actions/checkout@v2
@@ -54,7 +54,8 @@ jobs:
         cd TriplettEtAl2018
 
         pip install ipython
-        runipy TestDataset.ipynb
+        if [[ ${{ matrix.python-version }} == 3.7 ]]; then runipy TestDataset.ipynb; fi # issue with runipy on py > 3.8...
+
         python ../NWB/nwb_info.py TriplettEtAl2018.nwb
         ls -alt
 
