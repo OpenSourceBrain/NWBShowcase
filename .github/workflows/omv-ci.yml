@@ -28,7 +28,7 @@ jobs:
       run: |
         pip install seaborn numpy
         pip install pynwb==2.0.0 pyabf==2.1.10 imageio==2.6.1
-        pip install runipy nbmake # nbmake installs pytest
+        pip install nbmake # nbmake installs pytest
 
     - name:  Print info
       run: |
@@ -46,9 +46,8 @@ jobs:
     - name:  Test FergusonEtAl2015
       run: |
          cd FergusonEtAl2015/
-         python build.py
-         ls -alth
          pytest --nbmake TestData.ipynb
+         ls -alth
 
 
     - name:  Test TriplettEtAl2018
@@ -56,7 +55,7 @@ jobs:
         cd TriplettEtAl2018
 
         pip install ipython
-        if [[ ${{ matrix.python-version }} == 3.7 ]]; then runipy TestDataset.ipynb; fi # issue with runipy on py > 3.8...
+        pytest --nbmake TestDataset.ipynb
 
         python ../NWB/nwb_info.py TriplettEtAl2018.nwb
         ls -alt
