@@ -27,7 +27,7 @@ jobs:
     - name: Install packages
       run: |
         pip install seaborn numpy
-        pip install pynwb==2.2.0 imageio
+        pip install pynwb==2.2.0 imageio pyabf
         pip install nbmake # nbmake installs pytest
 
     - name:  Print info
