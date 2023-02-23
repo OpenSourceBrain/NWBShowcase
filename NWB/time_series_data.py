@@ -76,7 +76,7 @@ def create_nwb_file():
     electrode_table_region = nwbfile.create_electrode_table_region([0, 2], 'The first and third electrodes.')
 
     N = 100
-    timestamps = np.arange(N) 
+    timestamps = np.arange(N, dtype=np.float64) 
 
     ts1 = pynwb.TimeSeries(name='test_sine_1', 
                         data=np.sin(timestamps/4),
@@ -105,7 +105,7 @@ def create_nwb_file():
 
 
 def create_image(name, nwbfile):
-    import imageio
+    import imageio.v2 as imageio
     n = 82
     base_url = "https://raw.githubusercontent.com/OpenSourceBrain/NWBShowcase/master/NWB/images/"
     

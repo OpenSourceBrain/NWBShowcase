@@ -51,14 +51,14 @@ def create_nwb_file():
     electrode_table_region = nwbfile.create_electrode_table_region([0, 2], 'The first and third electrodes.')
 
     N = 2001
-    timestamps = np.arange(N) 
+    timestamps = np.arange(N, dtype=np.float64) 
     
-    s_timestamps = 1 + np.arange(N)*0.001
+    s_timestamps = 1.0 + np.arange(N)*0.001
     _info(s_timestamps)
     ms_timestamps = s_timestamps*1000
     _info(ms_timestamps)
     
-    mvolts = 50*np.sin(s_timestamps*10)-20
+    mvolts = 50.*np.sin(s_timestamps*10)-20
     _info(mvolts)
     volts=mvolts*0.001
     _info(volts)
@@ -116,15 +116,15 @@ def create_nwb_file():
     
     ss1 = pynwb.behavior.SpatialSeries(name='spatial_series_1D', 
                         reference_frame='Zero is origin..?',
-                        data=np.cos(timestamps/4),
+                        data=np.cos(timestamps/4.),
                         timestamps=timestamps,
                         comments='A wave...',
                         description='Description of this...')
 
     nwbfile.add_acquisition(ss1)
     
-    x = np.cos(timestamps/4)
-    y = np.sin(timestamps/5)
+    x = np.cos(timestamps/4.)
+    y = np.sin(timestamps/5.)
     ss2 = pynwb.behavior.SpatialSeries(name='spatial_series_2D', 
                         reference_frame='Zero is origin..?',
                         data=np.array([x,y]).T,
