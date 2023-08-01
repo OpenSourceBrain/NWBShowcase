@@ -108,6 +108,7 @@ def create_image(name, nwbfile):
     import imageio.v2 as imageio
     n = 82
     base_url = "https://raw.githubusercontent.com/OpenSourceBrain/NWBShowcase/master/NWB/images/"
+    base_url = "images/"
     
     images_url = [base_url + 'MyNetwork_T' + str(i) + '.png' for i in range(n)]  
 
