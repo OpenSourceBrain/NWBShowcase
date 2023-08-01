@@ -18,8 +18,8 @@ def create_nwb_file():
     start_time = datetime.now(tz=tzlocal())
     create_date = datetime.now(tz=tzlocal())
 
-    import hdmf._version
-    hdmf_ver = 'v%s'%hdmf._version.get_versions()['version']
+    import hdmf
+    hdmf_ver = 'v%s'%hdmf.__version__
     info = 'An example NWB file created with pynwb v%s (hdmf %s), Python v%s'%(pynwb.__version__,hdmf_ver,platform.python_version())
     
     nwbfile = pynwb.NWBFile('Example with various datatypes - primarily for testing NWB Widgets',
