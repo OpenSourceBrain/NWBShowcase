@@ -9,7 +9,7 @@ start_time = datetime.now(tz=tzlocal())
 create_date = datetime.now(tz=tzlocal())
 
 import hdmf._version
-hdmf_ver = 'v%s'%hdmf._version.get_versions()['version']
+hdmf_ver = 'v%s'%hdmf.__version__
 info = 'Example NWB file created with pynwb v%s (hdmf %s), Python v%s'%(pynwb.__version__,hdmf_ver,platform.python_version())
 nwbfile = pynwb.NWBFile('PyNWB example file', 
                   'NWB123', 
