@@ -81,4 +81,4 @@ Ongoing work on NWB Explorer can be followed [here](https://github.com/MetaCell/
 
 We are currently planning a new version of the Open Source Brain website (OSBv2) which will have a much deeper integration of model sharing (in NeuroML format) and data sharing (in NWB format) into a unified platform for collaborating and sharing research outputs in neuroscience.
 
-Stay tuned!
+Please stay tuned!
