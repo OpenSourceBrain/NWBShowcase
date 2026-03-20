@@ -26,7 +26,7 @@ jobs:
 
     - name: Install packages
       run: |
-        pip install setuptools --upgrade # needed for Python 3.12
+        pip install setuptools==80 # needed for Python 3.12
         pip install seaborn numpy
         pip install pynwb==2.2.0 imageio pyabf
         pip install nbmake # nbmake installs pytest
