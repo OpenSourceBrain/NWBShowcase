@@ -31,18 +31,9 @@ jobs:
         pip install pynwb imageio pyabf
         pip install nbmake # nbmake installs pytest
 
-    - name:  Print info
+    - name:  Run tests
       run: |
-          cd NWB
-          python simple.py
-          python nwb_info.py simple_example.nwb
-
-          python time_series_data.py
-          python nwb_info.py time_series_data.nwb
-
-          python datatypes.py
-          python nwb_info.py datatypes.nwb
-          ls -alt
+          ./test.sh
 
     - name:  Test FergusonEtAl2015
       run: |

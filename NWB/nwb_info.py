@@ -11,7 +11,7 @@ def parse_arguments():
     import argparse
 
     parser = argparse.ArgumentParser(
-                                     description=('nwb_info: Infor on NWBv2 files'),
+                                     description=('nwb_info: Info on NWBv2 files'),
                                      usage=('nwb_info.py [-h|--help] [NWB file]'),
                                      formatter_class=argparse.RawTextHelpFormatter
                                      )
